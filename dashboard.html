@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard – DataMorph AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --yellow:      #E8A020;
+      --yellow-dark: #D4911A;
+      --yellow-soft: rgba(232,160,32,0.12);
+      --black:       #111111;
+      --dark-bg:     #111111;
+      --dark-card:   #1A1A1A;
+      --dark-card2:  #1e1e1e;
+      --text-light:  #F0F0F0;
+      --text-muted:  #AAAAAA;
+      --brown-dark:  #21150f;
+      --border:      #2e2e2e;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--dark-bg);
+      color: var(--text-light);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      position: fixed; top: 0; left: 0;
+      width: 100%; z-index: 1000; height: 64px;
+      background: var(--yellow);
+      border-bottom: 1px solid rgba(0,0,0,0.12);
+    }
+    .navbar::after {
+      content: '';
+      position: absolute; bottom: -24px; left: 80px;
+      border-left: 40px solid transparent;
+      border-right: 40px solid transparent;
+      border-top: 25px solid var(--yellow);
+      z-index: 1001;
+    }
+    .nav-container {
+      max-width: 1300px; margin: 0 auto; height: 100%;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 28px;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+    .logo-icon { width: 34px; height: 34px; object-fit: contain; }
+    .logo-text { font-family: 'Righteous', cursive; font-size: 1.22rem; color: var(--black); }
+    .logo-accent { opacity: 0.6; }
+    .nav-right { display: flex; align-items: center; gap: 14px; }
+    .nav-tag {
+      font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.06em; color: var(--black);
+      background: rgba(0,0,0,0.12); border-radius: 20px;
+      padding: 4px 12px;
+    }
+    .nav-back {
+      font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700;
+      color: var(--yellow); background: var(--black);
+      text-decoration: none; padding: 7px 18px; border-radius: 6px;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .nav-back:hover { background: #000; transform: translateY(-1px); }
+
+    /* ── MAIN LAYOUT ── */
+    .page-wrapper {
+      flex: 1; display: flex; flex-direction: column;
+      padding-top: 64px; min-height: 100vh;
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      text-align: center;
+      padding: 52px 24px 36px;
+      position: relative;
+    }
+    .page-header::after {
+      content: '';
+      position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 60px; height: 3px; background: var(--yellow); border-radius: 2px;
+    }
+    .page-title {
+      font-family: 'Syne', sans-serif; font-size: 2.8rem;
+      font-weight: 800; color: #fff; letter-spacing: -0.01em;
+    }
+    .page-title span { color: var(--yellow); }
+    .page-subtitle {
+      font-size: 1rem; color: var(--text-muted);
+      margin-top: 10px; line-height: 1.6;
+    }
+
+    /* ── CONTROLS ROW ── */
+    .controls-row {
+      display: flex; align-items: center; justify-content: center;
+      gap: 16px; padding: 28px 24px 0;
+      flex-wrap: wrap;
+    }
+    .control-label {
+      font-family: 'Syne', sans-serif; font-size: 0.95rem;
+      font-weight: 600; color: var(--text-light); letter-spacing: 0.03em;
+    }
+    
+    /* ── MAIN CONTENT AREA ── */
+    .content-area {
+      display: flex; gap: 24px;
+      padding: 32px 40px 50px;
+      max-width: 1300px; margin: 0 auto; width: 100%;
+      flex: 1;
+    }
+
+    /* ── UPLOAD PANEL ── */
+    .upload-panel {
+      flex: 1;
+      background: var(--dark-card);
+      border: 2px dashed var(--border);
+      border-radius: 16px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 60px 40px;
+      cursor: pointer;
+      position: relative;
+      transition: border-color 0.3s ease, background 0.3s ease, transform 0.2s ease;
+      min-height: 460px;
+    }
+    .upload-panel:hover, .upload-panel.drag-over {
+      border-color: var(--yellow);
+      background: rgba(232,160,32,0.04);
+      transform: translateY(-2px);
+    }
+    .upload-panel input[type="file"] {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      opacity: 0; cursor: pointer; z-index: 2;
+    }
+    .upload-icon {
+      width: 70px; height: 70px;
+      background: var(--yellow-soft);
+      border: 2px solid rgba(232,160,32,0.25);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 24px;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+    .upload-panel:hover .upload-icon {
+      background: rgba(232,160,32,0.2);
+      transform: scale(1.08);
+    }
+    .upload-icon svg { width: 32px; height: 32px; }
+    .upload-title {
+      font-family: 'Syne', sans-serif; font-size: 1.35rem;
+      font-weight: 700; color: #fff; margin-bottom: 8px;
+      text-align: center;
+    }
+    .upload-or {
+      font-size: 0.9rem; color: #555; margin: 10px 0; font-weight: 500;
+    }
+    .upload-btn {
+      font-family: 'Syne', sans-serif; font-size: 0.88rem; font-weight: 700;
+      letter-spacing: 0.04em; color: #111;
+      background: var(--yellow); border: none; border-radius: 7px;
+      padding: 10px 26px; cursor: pointer; pointer-events: none;
+      transition: background 0.25s ease;
+      margin-bottom: 14px;
+    }
+    .upload-panel:hover .upload-btn { background: var(--yellow-dark); }
+    .upload-hint {
+      font-size: 0.82rem; color: #555;
+      text-align: center; line-height: 1.6;
+    }
+    .upload-hint span { color: var(--yellow); opacity: 0.8; }
+
+    /* file name display */
+    .file-name-display {
+      margin-top: 18px; font-size: 0.88rem;
+      color: var(--yellow); font-weight: 500;
+      text-align: center; display: none;
+    }
+
+    /* ── PREVIEW PANEL ── */
+    .preview-panel {
+      flex: 1;
+      background: var(--dark-card);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      display: flex; flex-direction: column;
+      min-height: 460px;
+      overflow: hidden;
+    }
+    .preview-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      background: #161616;
+    }
+    .preview-title {
+      font-family: 'Syne', sans-serif; font-size: 1.05rem;
+      font-weight: 700; color: #fff; letter-spacing: 0.02em;
+    }
+    .preview-title span { color: var(--yellow); }
+    .preview-actions { display: flex; gap: 10px; }
+    .preview-action-btn {
+      font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 500;
+      color: var(--text-muted); background: var(--dark-card2);
+      border: 1px solid var(--border); border-radius: 6px;
+      padding: 6px 14px; cursor: pointer;
+      transition: color 0.2s ease, border-color 0.2s ease;
+      display: none;
+    }
+    .preview-action-btn:hover { color: var(--yellow); border-color: var(--yellow); }
+    .preview-body {
+      flex: 1; padding: 28px 24px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+    .preview-empty {
+      text-align: center;
+    }
+    .preview-empty-icon {
+      width: 56px; height: 56px;
+      background: #1e1e1e; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px;
+    }
+    .preview-empty-icon svg { width: 26px; height: 26px; opacity: 0.3; }
+    .preview-empty h3 {
+      font-family: 'Syne', sans-serif; font-size: 1rem;
+      font-weight: 600; color: #444; margin-bottom: 8px;
+    }
+    .preview-empty p { font-size: 0.88rem; color: #3a3a3a; line-height: 1.6; }
+
+    /* output text area */
+    .preview-output {
+      width: 100%; flex: 1;
+      background: #161616; border: 1px solid var(--border);
+      border-radius: 10px; padding: 18px;
+      font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+      color: var(--text-light); line-height: 1.8;
+      resize: none; outline: none;
+      min-height: 340px;
+      display: none;
+    }
+    .preview-output:focus { border-color: var(--yellow); }
+
+    /* Process button */
+    .process-row {
+      padding: 0 40px 40px;
+      max-width: 1300px; margin: 0 auto; width: 100%;
+      display: flex; justify-content: center; gap: 14px;
+    }
+    .btn-process {
+      font-family: 'Syne', sans-serif; font-size: 1rem;
+      font-weight: 700; letter-spacing: 0.05em;
+      color: #111; background: var(--yellow);
+      border: none; border-radius: 8px;
+      padding: 14px 48px; cursor: pointer;
+      transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+      opacity: 0.45; pointer-events: none;
+    }
+    .btn-process.active {
+      opacity: 1; pointer-events: all;
+    }
+    .btn-process.active:hover {
+      background: var(--yellow-dark); transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(232,160,32,0.35);
+    }
+
+    /* status pill */
+    .status-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.82rem; color: var(--text-muted);
+      background: var(--dark-card2); border: 1px solid var(--border);
+      border-radius: 20px; padding: 6px 16px;
+      align-self: center;
+    }
+    .status-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #444; flex-shrink: 0;
+      transition: background 0.3s ease;
+    }
+    .status-dot.ready { background: var(--yellow); box-shadow: 0 0 6px rgba(232,160,32,0.5); }
+    .status-dot.processing {
+      background: var(--yellow);
+      animation: pulse 1s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .content-area { flex-direction: column; padding: 24px 20px 40px; }
+      .upload-panel { min-height: 300px; }
+      .preview-panel { min-height: 300px; }
+      .process-row { padding: 0 20px 40px; }
+    }
+    @media (max-width: 480px) {
+      .page-title { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/images/logo.png" alt="Logo" class="logo-icon" />
+        <span class="logo-text">DataMorph <span class="logo-accent">AI</span></span>
+      </a>
+      <div class="nav-right">
+        <span class="nav-tag">PROTOTYPE PREVIEW</span>
+        <a href="signup.html" class="nav-back">← Back to Sign Up</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page-wrapper">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+      <h1 class="page-title">Try it <span>out</span></h1>
+      <p class="page-subtitle">Upload a document and let DataMorph AI extract its content instantly.</p>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="content-area">
+
+      <!-- UPLOAD PANEL -->
+      <div class="upload-panel" id="uploadPanel">
+        <input type="file" id="fileInput" accept=".pdf,.png,.jpg,.jpeg,.tiff,.bmp" />
+        <div class="upload-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--yellow)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+        </div>
+        <div class="upload-title">Drag a file here</div>
+        <div class="upload-or">or</div>
+        <div class="upload-btn">Choose File</div>
+        <div class="upload-hint">
+          PDF, PNG, JPG, TIFF up to 10 MB<br/>
+          <span>Scanned image-based documents supported. </span>
+        </div>
+        <div class="file-name-display" id="fileNameDisplay">📄 <span id="fileNameText"></span></div>
+      </div>
+
+      <!-- PREVIEW PANEL -->
+      <div class="preview-panel" id="previewPanel">
+        <div class="preview-header">
+          <div class="preview-title">Preview <span>Output</span></div>
+          <div class="preview-actions">
+            <button class="preview-action-btn" id="copyBtn" onclick="copyOutput()">Copy</button>
+            <button class="preview-action-btn" id="downloadBtn" onclick="downloadOutput()">Download</button>
+          </div>
+        </div>
+        <div class="preview-body" id="previewBody">
+          <div class="preview-empty" id="previewEmpty">
+            <div class="preview-empty-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+              </svg>
+            </div>
+            <h3>No output yet</h3>
+            <p>Upload a file and click<br/>"Process Document" to see results.</p>
+          </div>
+          <textarea class="preview-output" id="previewOutput" readonly placeholder="Extracted text will appear here..."></textarea>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- PROCESS BUTTON ROW -->
+    <div class="process-row">
+      <button class="btn-process" id="processBtn" onclick="processFile()">
+        ⚡ Process Document
+      </button>
+      <div class="status-pill" id="statusPill">
+        <div class="status-dot" id="statusDot"></div>
+        <span id="statusText">Waiting for file...</span>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const fileInput    = document.getElementById('fileInput');
+    const uploadPanel  = document.getElementById('uploadPanel');
+    const processBtn   = document.getElementById('processBtn');
+    const statusDot    = document.getElementById('statusDot');
+    const statusText   = document.getElementById('statusText');
+    const fileNameDisplay = document.getElementById('fileNameDisplay');
+    const fileNameText = document.getElementById('fileNameText');
+    const previewEmpty = document.getElementById('previewEmpty');
+    const previewOutput = document.getElementById('previewOutput');
+    const copyBtn      = document.getElementById('copyBtn');
+    const downloadBtn  = document.getElementById('downloadBtn');
+
+    // File selected
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) onFileReady(file);
+    });
+
+    // Drag & drop
+    uploadPanel.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadPanel.classList.add('drag-over');
+    });
+    uploadPanel.addEventListener('dragleave', () => {
+      uploadPanel.classList.remove('drag-over');
+    });
+    uploadPanel.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadPanel.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file) onFileReady(file);
+    });
+
+    function onFileReady(file) {
+      fileNameText.textContent = file.name;
+      fileNameDisplay.style.display = 'block';
+      processBtn.classList.add('active');
+      statusDot.className = 'status-dot ready';
+      statusText.textContent = 'File ready — click Process';
+      uploadPanel.style.borderColor = 'var(--yellow)';
+    }
+
+    // Simulate processing (prototype — no real OCR)
+    function processFile() {
+      if (!processBtn.classList.contains('active')) return;
+
+      statusDot.className = 'status-dot processing';
+      statusText.textContent = 'Processing...';
+      processBtn.disabled = true;
+      processBtn.textContent = '⏳ Processing...';
+
+      setTimeout(() => {
+        const sampleOutput =
+`EXTRACTED TEXT — DataMorph AI (Prototype)
+==========================================
+
+[Page 1]
+
+This is a prototype demonstration of the DataMorph AI OCR engine.
+In the live version, the actual text extracted from your uploaded
+document would appear here.
+
+The system supports:
+  • Printed text in multiple languages
+  • Handwritten manuscript recognition
+  • Table and structured data extraction
+  • Multi-column layout parsing
+  • Historical document fonts & scripts
+
+[Metadata]
+Language detected : English
+Confidence score  : 98.4%
+Words extracted   : 1,247
+Processing time   : 1.3s
+
+==========================================
+Sign up to process real documents →
+https://datamorphai.com/signup`;
+
+        previewOutput.value = sampleOutput;
+        previewEmpty.style.display = 'none';
+        previewOutput.style.display = 'block';
+        copyBtn.style.display = 'inline-flex';
+        downloadBtn.style.display = 'inline-flex';
+
+        statusDot.className = 'status-dot ready';
+        statusText.textContent = 'Done!';
+        processBtn.textContent = '✓ Processed';
+        processBtn.style.background = '#2a7a2a';
+        processBtn.style.color = '#fff';
+      }, 2200);
+    }
+
+    function copyOutput() {
+      navigator.clipboard.writeText(previewOutput.value);
+      copyBtn.textContent = 'Copied!';
+      setTimeout(() => copyBtn.textContent = 'Copy', 1800);
+    }
+
+    function downloadOutput() {
+      const blob = new Blob([previewOutput.value], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'datamorphai-output.txt';
+      a.click();
+    }
+  </script>
+
+  <script type="module" src="js/firebase-auth.js"></script>
+</body>
+</html>

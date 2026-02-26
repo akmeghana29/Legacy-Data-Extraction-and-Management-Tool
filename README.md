@@ -2,7 +2,8 @@
 
 Full Stack | Deep Learning | Computer Vision | OCR | Research Project
 
-Live Web App: https://datamorphai.vercel.app  
+#Live Web App: [https://datamorphai.vercel.app  ](https://datamorphai1-6lql9rivl-meghanas-projects-95e603a4.vercel.app/)
+##If not accessible please click: https://akmeghana29.github.io/datamorphai/
 
 ---
 

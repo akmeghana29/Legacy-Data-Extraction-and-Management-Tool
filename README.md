@@ -4,11 +4,11 @@ Full Stack | Deep Learning | Computer Vision | OCR | Research Project
 
 ## For Recruiters
 
-# Live Web App: [https://datamorphai.vercel.app  ](https://datamorphai1-6lql9rivl-meghanas-projects-95e603a4.vercel.app/)
+## Live Web App: [https://datamorphai.vercel.app  ](https://datamorphai1-6lql9rivl-meghanas-projects-95e603a4.vercel.app/)
 
-# If not accessible please click: https://akmeghana29.github.io/datamorphai/    or find the screenschots of the website at the bottom of README file
+### If not accessible please click: https://akmeghana29.github.io/datamorphai/    or find the screenschots of the website at the bottom of README file
 
-## You can view prototype without logging in by clicking View Prototype button under Sign Up/Sign In buttons
+#### You can view prototype without logging in by clicking View Prototype button under Sign Up/Sign In buttons
 
 ---
 
@@ -220,6 +220,21 @@ PyMuPDF
 A Kirti Meghana
 
 ---
+
+
+<img src="./assets/images/Screenshot 2026-02-27 213225.png" alt="Screenshot 1" width="800"/>
+
+<img src="./assets/images/Screenshot 2026-02-27 213254.png" alt="Screenshot 2" width="800"/>
+
+<img src="./assets/images/Screenshot 2026-02-27 213243.png" alt="Screenshot 3" width="800"/>
+
+<img src="./assets/images/Screenshot 2026-02-27 213234.png" alt="Screenshot 4" width="800"/>
+
+<img src="./assets/images/Screenshot 2026-02-27 213324.png" alt="Screenshot 5" width="800"/>
+
+<img src="./assets/images/Screenshot 2026-02-27 213313.png" alt="Screenshot 6" width="800"/>
+
+<img src="./assets/images/Screenshot 2026-02-27 213307.png" alt="Screenshot 7" width="800"/>
 
 ## Research Paper
 

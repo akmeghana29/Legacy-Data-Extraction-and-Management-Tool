@@ -4,9 +4,9 @@ Full Stack | Deep Learning | Computer Vision | OCR | Research Project
 
 ## For Recruiters
 
-### Live Web App: [https://datamorphai.vercel.app  ](https://datamorphai1-6lql9rivl-meghanas-projects-95e603a4.vercel.app/)
+### Live Web App: https://akmeghana29.github.io/datamorphai/ 
 
-## If not accessible please click: https://akmeghana29.github.io/datamorphai/    or find the screenschots of the website at the bottom of README file
+## Web App Deployed on Vercel: [https://datamorphai.vercel.app  ](https://datamorphai1-6lql9rivl-meghanas-projects-95e603a4.vercel.app/) or find the screenschots of the website at the bottom of README file
 
 #### You can view prototype without logging in by clicking View Prototype button under Sign Up/Sign In buttons
 

@@ -12,6 +12,22 @@ Full Stack | Deep Learning | Computer Vision | OCR | Research Project
 
 ---
 
+## Screenshots
+
+<img src="./assets/images/Screenshot 2026-02-27 213225.png" alt="Screenshot 1" width="800"/>
+
+<img src="./assets/images/Screenshot 2026-02-27 213254.png" alt="Screenshot 2" width="800"/>
+
+<img src="./assets/images/Screenshot 2026-02-27 213243.png" alt="Screenshot 3" width="800"/>
+
+<img src="./assets/images/Screenshot 2026-02-27 213234.png" alt="Screenshot 4" width="800"/>
+
+<img src="./assets/images/Screenshot 2026-02-27 213324.png" alt="Screenshot 5" width="800"/>
+
+<img src="./assets/images/Screenshot 2026-02-27 213313.png" alt="Screenshot 6" width="800"/>
+
+<img src="./assets/images/Screenshot 2026-02-27 213307.png" alt="Screenshot 7" width="800"/>
+
 ## Overview
 
 Note to recruiters: The frontend is fully deployed on vercel and production-ready, demonstrating the complete user workflow and interface.  
@@ -220,21 +236,6 @@ PyMuPDF
 A Kirti Meghana
 
 ---
-
-
-<img src="./assets/images/Screenshot 2026-02-27 213225.png" alt="Screenshot 1" width="800"/>
-
-<img src="./assets/images/Screenshot 2026-02-27 213254.png" alt="Screenshot 2" width="800"/>
-
-<img src="./assets/images/Screenshot 2026-02-27 213243.png" alt="Screenshot 3" width="800"/>
-
-<img src="./assets/images/Screenshot 2026-02-27 213234.png" alt="Screenshot 4" width="800"/>
-
-<img src="./assets/images/Screenshot 2026-02-27 213324.png" alt="Screenshot 5" width="800"/>
-
-<img src="./assets/images/Screenshot 2026-02-27 213313.png" alt="Screenshot 6" width="800"/>
-
-<img src="./assets/images/Screenshot 2026-02-27 213307.png" alt="Screenshot 7" width="800"/>
 
 ## Research Paper
 

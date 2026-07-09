@@ -2,8 +2,6 @@
 
 Full Stack | Deep Learning | Computer Vision | OCR | Research Project
 
-# For Recruiters
-
 ## Live Web App: https://datamorphai1.vercel.app/
 
 ### If unable to access the link please click this: https://akmeghana29.github.io/datamorphai/ 
